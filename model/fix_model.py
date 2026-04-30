@@ -1,11 +1,10 @@
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
-save_path = "./final_simplifier_model"
+save_path = "./bart-simplification-final"
 tokenizer = AutoTokenizer.from_pretrained(save_path)
 model     = AutoModelForSeq2SeqLM.from_pretrained(save_path)
 
 def simplify(text):
-    # adding a prefix tells t5 exactly what task to do
     prefixed = "simplify: " + text
 
     inputs = tokenizer(
@@ -15,13 +14,13 @@ def simplify(text):
         max_length=128
     )
     outputs = model.generate(
-        inputs["input_ids"],
-        max_length=80,
-        num_beams=4,
-        no_repeat_ngram_size=3,
-        repetition_penalty=2.0,   # punishes repeating words
-        length_penalty=0.8,       # encourages shorter output
-        early_stopping=True
+       inputs["input_ids"],
+       attention_mask=inputs["attention_mask"],
+       max_length=64,
+       num_beams=4,
+       repetition_penalty=1.2,
+       length_penalty=1.0,
+       early_stopping=True
     )
     return tokenizer.decode(outputs[0], skip_special_tokens=True)
 

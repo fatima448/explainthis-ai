@@ -1,5 +1,10 @@
 venv/
 backend/venv/
+model/venv/
+model/bart-simplification/
+model/bart-simplification-final/
+model/*checkpoint*/
+
 **/venv/
 node_modules/
 frontend/node_modules/
@@ -7,7 +12,9 @@ frontend/node_modules/
 __pycache__/
 *.pyc
 *.pkl
+*.bin
 *.pt
 *.h5
+*.pth
 
 
