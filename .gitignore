@@ -1,5 +1,6 @@
 venv/
 backend/venv/
+backend/.venv/
 model/venv/
 model/bart-simplification/
 model/bart-simplification-final/
