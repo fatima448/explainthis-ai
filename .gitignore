@@ -4,6 +4,8 @@ backend/.venv/
 model/venv/
 model/bart-simplification/
 model/bart-simplification-final/
+model/bart-wikilarge/
+model/bart-wikilarge-final/
 model/*checkpoint*/
 
 **/venv/

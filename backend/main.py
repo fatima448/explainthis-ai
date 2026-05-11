@@ -79,7 +79,6 @@ def count_words(text: str) -> int:
 
 
 def simplify_sentence(sentence: str) -> str:
-    """Simplify a single sentence — matches what the model was trained on."""
     sentence = sentence.strip()
     if not sentence:
         return ""
@@ -109,8 +108,8 @@ def simplify_sentence(sentence: str) -> str:
 
 def split_sentences(text: str) -> list[str]:
 
-    text = re.sub(r'(Mr|Mrs|Ms|Dr|Prof|Sr|Jr|vs|etc|approx|dept)\.',
-                  r'<PERIOD>', text)
+    text = re.sub(r'(Mr|Mrs|Ms|Dr|Prof|Sr|Jr|vs|etc|approx|dept)\.',
+                  r'<PERIOD>', text)
     sentences = re.split(r'(?<=[.!?])\s+(?=[A-Z])|(?<=[.!?])$', text)
     
     sentences = [s.replace('<PERIOD>', '.').strip() for s in sentences]

@@ -14,7 +14,7 @@ const Navbar = () => {
   }, [lightMode]);
   return (
     <>
-      <div className="nav flex items-center justify-between px-[120px] h-[70px] ">
+      <div className="nav flex items-center justify-between px-[40px] h-[70px] ">
         <div className="logo flex items-center gap-[1px]">
           <img src={logo} alt="Logo" className="h-[75px]" />
           <h3 className="text-[30px] font-bold tracking-tight ">

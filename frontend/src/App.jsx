@@ -154,7 +154,7 @@ const App = () => {
               Here is the simplified version:
             </p>
 
-            <div className="preview ">
+            <div className="preview">
               <div className="header w-full h-[70px]">
                 <h3 className="text-[18px] text-[hsla(0, 2%, 66%, 1.00)] ">
                   Simplified Output

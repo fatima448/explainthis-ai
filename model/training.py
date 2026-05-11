@@ -10,18 +10,15 @@ from transformers import (
 
 # 1.PREPROCESSING 
 
-# Noisy punctuation symbols 
 _NOISE_PUNCT_RE = re.compile(r'[\"#$%&\*+/<=>@\[\\\]^_`{|}~]')
-#  2+ whitespace characters
 _WHITESPACE_RE  = re.compile(r'\s{2,}')
-# Wikipedia-specific artifacts (URLs, citation markers, template syntax)
 _URL_RE         = re.compile(r'http\S+')
 _CITATION_RE    = re.compile(r'\[\d+\]')      
 _WIKI_TMPL_RE   = re.compile(r'\{\{.*?\}\}')   
 
-MIN_WORD_COUNT  = 5    # samples shorter than this are likely malformed
-MAX_WORD_COUNT  = 100  # samples longer than this slow CPU training
-MAX_SIMP_RATIO  = 1.5  # simplified must not be 20%+ longer than original
+MIN_WORD_COUNT  = 5    
+MAX_WORD_COUNT  = 100  
+MAX_SIMP_RATIO  = 1.5  
 
 
 def clean_english(text: str) -> str:
@@ -30,14 +27,11 @@ def clean_english(text: str) -> str:
         return ""
     text = text.lower()
     text = re.sub(r'[\r\n\t]+', ' ', text)
-    # ── Wikipedia artifact removal ──
     text = _URL_RE.sub('', text)
     text = _CITATION_RE.sub('', text)
     text = _WIKI_TMPL_RE.sub('', text)
-    # ── Punctuation cleanup ──
     text = _NOISE_PUNCT_RE.sub('', text)
-    text = re.sub(r'\s([,.!?;:])', r'\1', text)  # remove space before punctuation
-    # ── Whitespace normalization ──
+    text = re.sub(r'\s([,.!?;:])', r'\1', text)  
     text = _WHITESPACE_RE.sub(' ', text)
     return text.strip()
 
@@ -131,7 +125,7 @@ def main():
     # ── 2. Text-level preprocessing ──────────────────────────────────────────
     print("\n[2/6] Applying English preprocessing...")
     dataset = dataset.map(expand_dataset,batched=True,remove_columns=dataset["train"].column_names)
-    # De-duplicate by (original, simplified) pair within each split
+
     for split_name in ("train", "validation"):
         seen = set()
         def dedup(example, seen=seen):
@@ -200,7 +194,7 @@ def main():
     )
 
     # ── 6. Train ─────────────────────────────────────────────────────────────
-    print("\n[6/6] Starting training (~30–45 min on CPU)...")
+    print("\n[6/6] Starting training... ")
     trainer.train()
 
     print("\nSaving model to ./bart-simplification-final ...")

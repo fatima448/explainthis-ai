@@ -92,8 +92,9 @@ html {
   height: 10vh;
   position: fixed;
   top: 0;
-  left: 0;
   width: 100%;
+  justify-content:space-between;
+  align-items: center;
 }
 
 .icon {
@@ -178,7 +179,7 @@ i:hover {
   background-color: var(--color-secondary);
   width: 60vw;
   height: 60vh;
-
+  overflow-y: auto;
   margin-top: 30px;
   margin-bottom: 40px;
   border-radius: 15px;
@@ -197,6 +198,8 @@ i:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: sticky;
+  top: 0;
 }
 .preview .content {
   display: flex;
@@ -207,3 +210,4 @@ i:hover {
   min-height: 120px;
   
 }
+
