@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import { MdOutlineArrowUpward, MdErrorOutline } from "react-icons/md";
-import { FiCopy, FiTrash2 , FiLoader } from "react-icons/fi";
+import { FiCopy, FiTrash2, FiLoader } from "react-icons/fi";
 import { FaCheck } from "react-icons/fa6";
 import api from "./api";
 
-const MAX_CHARS = 5000; // maximum limit 
+const MAX_CHARS = 5000; // maximum limit
 
 const App = () => {
   const [prompt, setPrompt] = useState("");
@@ -18,7 +18,7 @@ const App = () => {
 
   const charsLeft = MAX_CHARS - prompt.length; //how many characters are left before hitting MAX_CHARS
   const isOverLimit = charsLeft < 0; // if the number is zero or negative, it means the user has exceeded the limit
-  const hasOutput = simplifiedText || loading || error; // if any of these have a h=value then we have sth to show 
+  const hasOutput = simplifiedText || loading || error; // if any of these have a h=value then we have sth to show
 
   const handleSubmit = async () => {
     if (loading || prompt.trim().length < 10 || isOverLimit) return; // prevent submisstion if one of these is true
@@ -30,18 +30,18 @@ const App = () => {
       setLoading(true); // start loading state
       const response = await api.post("/explain", { text: prompt }); // send the text to the backend
       const { simplified_text, original_word_count, simplified_word_count } =
-        response.data;  // response
+        response.data; // response
       setSimplifiedText(simplified_text); // store the simplified text in state to display it
       setStats({
         original: original_word_count,
         simplified: simplified_word_count,
       });
     } catch (err) {
-      const msg = err?.response?.data?.detail || "Something went wrong."; //get an error message from backend or use the defult one 
+      const msg = err?.response?.data?.detail || "Something went wrong."; //get an error message from backend or use the defult one
       setError(msg);
     } finally {
-      setLoading(false);// stop loading 
-    } 
+      setLoading(false); // stop loading
+    }
   };
 
   const handleClear = () => {
@@ -49,7 +49,7 @@ const App = () => {
     setSimplifiedText("");
     setError("");
     setStats(null);
-  }; // reset evrything 
+  }; // reset evrything
 
   const handleCopy = () => {
     if (!simplifiedText) return; // if there is no text to copy, dont do anything
@@ -62,9 +62,12 @@ const App = () => {
     <>
       <Navbar />
       <div className="container ">
-        <h3 className="text-[40px] md:text-6xl font-bold  tracking-tight  ">
+        <h3 className="text-[40px] md:text-6xl font-bold tracking-tight text-center">
           Complexity,{" "}
-          <span className="bg-gradient-to-bl from-transparent via-cyan-500 to-blue-800 bg-clip-text text-transparent kenburns-top-alternate">
+          <span
+            className="bg-gradient-to-bl from-transparent via-cyan-500 
+    to-blue-800 bg-clip-text text-transparent"
+          >
             Simplified.
           </span>
         </h3>
@@ -87,7 +90,7 @@ const App = () => {
                   : charsLeft < 200
                     ? "text-yellow-400"
                     : "text-[hsla(0,2%,45%,1)]"
-              }`} 
+              }`}
             >
               {prompt.length} / {MAX_CHARS}
             </span>
@@ -108,7 +111,7 @@ const App = () => {
                 >
                   {loading ? (
                     <>
-                      <span className="loader"  />
+                      <span className="loader" />
                       <FiLoader />
                     </>
                   ) : (
@@ -132,7 +135,9 @@ const App = () => {
               <div className="flex gap-6 mt-8 text-[13px] text-[hsla(0,2%,66%,1)]">
                 <span>
                   Original:{" "}
-                  <strong className="text-gray-400">{stats.original} words</strong>
+                  <strong className="text-gray-400">
+                    {stats.original} words
+                  </strong>
                 </span>
                 <span>→</span>
                 <span>
@@ -143,7 +148,8 @@ const App = () => {
                 </span>
                 <span className="text-green-400 font-semibold">
                   {Math.round(
-                    ((stats.original - stats.simplified) / stats.original) * 100,
+                    ((stats.original - stats.simplified) / stats.original) *
+                      100,
                   )}
                   % shorter
                 </span>

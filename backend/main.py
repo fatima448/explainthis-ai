@@ -115,6 +115,22 @@ def split_sentences(text: str) -> list[str]:
     sentences = [s.replace('<PERIOD>', '.').strip() for s in sentences]
     return [s for s in sentences if s]  
 
+def restore_capitalization(text: str) -> str:
+    if not text:
+        return text
+
+    # Capitalize the first letter of the entire text
+    text = text[0].upper() + text[1:]
+
+    # Capitalize the first letter after punctuation
+    text = re.sub(
+        r'(?<=[.!?]\s)([a-z])',
+        lambda m: m.group(1).upper(),
+        text
+    )
+
+    return text
+
 @app.get("/health")
 async def health():
     return {"status": "ok", "model_path": MODEL_PATH, "device": device}
@@ -137,6 +153,7 @@ async def explain(request: ExplainRequest):
                 simplified_sentences.append(result)
 
         simplified = " ".join(simplified_sentences)
+        simplified = restore_capitalization(simplified)
         simp_wc    = count_words(simplified)
 
         return ExplainResponse(

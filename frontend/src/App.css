@@ -92,8 +92,9 @@ html {
   height: 10vh;
   position: fixed;
   top: 0;
+  display: flex;
   width: 100%;
-  justify-content:space-between;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -208,6 +209,23 @@ i:hover {
   justify-content: flex-start; /* top-align — overrides any center */
   padding: 16px;
   min-height: 120px;
-  
 }
+@media (max-width: 768px) {
+  .nav {
+    padding: 0 12px;
+  }
+  .container {
+    padding-top: 15vh;
+    padding-left: 16px;
+    padding-right: 16px;
+    align-items: center;
+  }
 
+  .inputBox {
+    width: 90vw;
+  }
+
+  .preview {
+    width: 90vw;
+  }
+}
